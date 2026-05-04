@@ -1,10 +1,5 @@
 const { initDatabase } = require('./database');
 
-/**
- * Seed the database with 50 sample orders.
- * Run: npm run seed
- */
-
 const customers = [
   'Alice Johnson', 'Bob Smith', 'Charlie Brown', 'Diana Prince', 'Eve Davis',
   'Frank Miller', 'Grace Lee', 'Henry Wilson', 'Ivy Chen', 'Jack Taylor',
@@ -24,7 +19,6 @@ const randomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 const randomAmount = (min, max) => +(Math.random() * (max - min) + min).toFixed(2);
 
-// Generate a random date within the past 90 days
 const randomDate = () => {
   const now = Date.now();
   const ninetyDays = 90 * 24 * 60 * 60 * 1000;
@@ -33,7 +27,6 @@ const randomDate = () => {
 };
 
 const seedDatabase = (db) => {
-  // Clear existing data
   db.clear();
 
   const orders = Array.from({ length: 50 }, () => {
@@ -57,7 +50,6 @@ const seedDatabase = (db) => {
   return orders;
 };
 
-// Run directly: node src/seed.js
 if (require.main === module) {
   const db = initDatabase();
   seedDatabase(db);

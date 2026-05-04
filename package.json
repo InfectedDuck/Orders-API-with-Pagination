@@ -1,13 +1,14 @@
 {
   "name": "orders-management-api",
   "version": "1.0.0",
-  "description": "Orders Management REST API with pagination and filtering",
+  "description": "Orders Management REST API — Task 4 refactor (modular list parsing & validation)",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "seed": "node src/seed.js",
     "test": "jest --verbose --forceExit --detectOpenHandles",
-    "test:coverage": "jest --coverage --forceExit --detectOpenHandles"
+    "test:coverage": "jest --coverage --forceExit --detectOpenHandles",
+    "lint": "node --check src/server.js src/app.js src/constants.js src/orderBodyValidation.js src/orderListParams.js src/database.js src/routes.js src/seed.js tests/orders.test.js"
   },
   "dependencies": {
     "express": "^4.18.2",

@@ -7,7 +7,6 @@ let app;
 let db;
 
 beforeAll(() => {
-  // Use in-memory database for test isolation
   db = initDatabase(':memory:');
   app = createApp(db);
   seedDatabase(db);
@@ -16,8 +15,6 @@ beforeAll(() => {
 afterAll(() => {
   db.close();
 });
-
-// POST /api/orders - create order
 
 describe('POST /api/orders', () => {
   const validOrder = {
@@ -35,7 +32,7 @@ describe('POST /api/orders', () => {
     expect(res.body.product).toBe('Test Product');
     expect(res.body.quantity).toBe(3);
     expect(res.body.amount).toBe(49.99);
-    expect(res.body.status).toBe('pending'); // default status
+    expect(res.body.status).toBe('pending');
   });
 
   test('2. Should create an order with explicit status', async () => {
@@ -61,7 +58,6 @@ describe('POST /api/orders', () => {
     expect(res.body.details[0]).toContain('status must be one of');
   });
 
-  // Edge case: negative amount
   test('5. Should reject order with negative amount', async () => {
     const res = await request(app)
       .post('/api/orders')
@@ -69,7 +65,6 @@ describe('POST /api/orders', () => {
     expect(res.status).toBe(400);
   });
 
-  // Edge case: zero quantity
   test('6. Should reject order with zero quantity', async () => {
     const res = await request(app)
       .post('/api/orders')
@@ -77,7 +72,6 @@ describe('POST /api/orders', () => {
     expect(res.status).toBe(400);
   });
 
-  // Edge case: whitespace-only customer_name (trim → empty)
   test('7. Should reject order with whitespace-only customer_name', async () => {
     const res = await request(app)
       .post('/api/orders')
@@ -85,8 +79,6 @@ describe('POST /api/orders', () => {
     expect(res.status).toBe(400);
   });
 });
-
-// GET /api/orders - list with pagination
 
 describe('GET /api/orders - Pagination', () => {
   test('8. Should return paginated results with default page=1, limit=10', async () => {
@@ -119,15 +111,12 @@ describe('GET /api/orders - Pagination', () => {
     expect(res.body.pagination.has_next).toBe(false);
   });
 
-  // Edge case: limit capped at 100
   test('11. Should cap limit at 100', async () => {
     const res = await request(app).get('/api/orders?limit=500');
     expect(res.status).toBe(200);
     expect(res.body.pagination.limit).toBe(100);
   });
 });
-
-// GET /api/orders - filtering
 
 describe('GET /api/orders - Filtering', () => {
   test('12. Should filter by status', async () => {
@@ -163,7 +152,6 @@ describe('GET /api/orders - Filtering', () => {
     expect(res.body.error).toContain('Invalid status');
   });
 
-  // Edge case: invalid min_amount
   test('16. Should reject non-numeric min_amount', async () => {
     const res = await request(app).get('/api/orders?min_amount=abc');
     expect(res.status).toBe(400);
@@ -182,8 +170,6 @@ describe('GET /api/orders - Filtering', () => {
   });
 });
 
-// GET /api/orders/:id - single order
-
 describe('GET /api/orders/:id', () => {
   test('18. Should return a single order by ID', async () => {
     const res = await request(app).get('/api/orders/1');
@@ -198,8 +184,6 @@ describe('GET /api/orders/:id', () => {
     expect(res.status).toBe(404);
   });
 });
-
-// PUT /api/orders/:id - update order
 
 describe('PUT /api/orders/:id', () => {
   test('20. Should update an existing order', async () => {
@@ -219,8 +203,6 @@ describe('PUT /api/orders/:id', () => {
   });
 });
 
-// DELETE /api/orders/:id - delete order
-
 describe('DELETE /api/orders/:id', () => {
   let orderIdToDelete;
 
@@ -239,7 +221,6 @@ describe('DELETE /api/orders/:id', () => {
     expect(res.status).toBe(200);
     expect(res.body.message).toContain('deleted successfully');
 
-    // Verify it's gone
     const getRes = await request(app).get(`/api/orders/${orderIdToDelete}`);
     expect(getRes.status).toBe(404);
   });
@@ -249,8 +230,6 @@ describe('DELETE /api/orders/:id', () => {
     expect(res.status).toBe(404);
   });
 });
-
-// Health check & 404
 
 describe('Misc endpoints', () => {
   test('24. Health check should return ok', async () => {
