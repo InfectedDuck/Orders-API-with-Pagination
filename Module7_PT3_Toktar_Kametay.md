@@ -230,4 +230,4 @@ A vague comment like `// list orders` produced a vague handler. A specific one l
 
 ## 7. Run commands
 
-Clone **https://github.com/InfectedDuck/Orders-API-with-Pagination**, then same as **`README.md`**: `npm install`, `npm run seed`, `npm start`, `npm test`, `npm run test:coverage`. No duplicate command block here when submitting repo + README.
+Clone **https://github.com/InfectedDuck/Orders-API-with-Pagination**, then same as **`README.md`**: `npm install`, `npm run seed`, `npm start`, `npm test`, `npm run test:coverage`. 
