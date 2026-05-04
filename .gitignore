@@ -1,0 +1,6 @@
+node_modules/
+coverage/
+orders.json
+.env
+*.log
+.DS_Store
