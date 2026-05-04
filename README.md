@@ -71,10 +71,3 @@ Response shape:
 
 ---
 
-## Opening a PR against Task 3
-
-1. Push **Task 3** repo as **`main`** (or `master`).  
-2. Create branch **`feature/task-4-refactor`** from `task_4`, push it.  
-3. Base = Task 3 default branch, compare = `feature/task-4-refactor`.  
-
-Expected diff highlights: **new files** (`constants.js`, `orderListParams.js`, `orderBodyValidation.js`), **slimmer** `routes.js`, **pipeline** `database.js`, **`lint` script** in `package.json`, README updates.
